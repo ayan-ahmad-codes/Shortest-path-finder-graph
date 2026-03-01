@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Taxi Fare Estimator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚖 Taxi Fare Estimator</h1>
+            <p>Calculate your ride fare instantly</p>
+        </header>
+
+        <div class="main-content">
+            <!-- Left Panel: Input Form -->
+            <div class="input-panel">
+                <div class="card">
+                    <h2>Trip Details</h2>
+                    
+                    <div class="form-group">
+                        <label for="pickup">Pickup Location</label>
+                        <select id="pickup" class="input-field">
+                            <option value="">Select pickup point</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dropoff">Drop-off Location</label>
+                        <select id="dropoff" class="input-field">
+                            <option value="">Select drop-off point</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="vehicleType">Vehicle Type</label>
+                        <select id="vehicleType" class="input-field">
+                            <option value="economy">Economy - Rs 50/km</option>
+                            <option value="comfort">Comfort - Rs 80/km</option>
+                            <option value="premium">Premium - Rs 120/km</option>
+                            <option value="xl">XL (6 seats) - Rs 100/km</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="timeOfDay">Time of Day</label>
+                        <select id="timeOfDay" class="input-field">
+                            <option value="normal">Normal Hours (No surge)</option>
+                            <option value="peak">Peak Hours (1.5x surge)</option>
+                            <option value="night">Night (1.25x surge)</option>
+                        </select>
+                    </div>
+
+                    <button id="calculateBtn" class="btn-primary">Calculate Fare</button>
+                    <button id="resetBtn" class="btn-secondary">Reset</button>
+                </div>
+
+                <!-- Fare Breakdown -->
+                <div class="card fare-result" id="fareResult" style="display: none;">
+                    <h2>Fare Breakdown</h2>
+                    <div class="fare-details">
+                        <div class="fare-item">
+                            <span>Distance:</span>
+                            <span id="distance">-</span>
+                        </div>
+                        <div class="fare-item">
+                            <span>Estimated Time:</span>
+                            <span id="time">-</span>
+                        </div>
+                        <div class="fare-item">
+                            <span>Base Fare:</span>
+                            <span id="baseFare">-</span>
+                        </div>
+                        <div class="fare-item">
+                            <span>Distance Charge:</span>
+                            <span id="distanceCharge">-</span>
+                        </div>
+                        <div class="fare-item">
+                            <span>Time Charge:</span>
+                            <span id="timeCharge">-</span>
+                        </div>
+                        <div class="fare-item">
+                            <span>Surge Multiplier:</span>
+                            <span id="surgeMultiplier">-</span>
+                        </div>
+                        <div class="fare-item total">
+                            <span>Total Fare:</span>
+                            <span id="totalFare">-</span>
+                        </div>
+                    </div>
+                    <div class="route-info">
+                        <h3>Route Path:</h3>
+                        <div id="routePath" class="route-path"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Panel: Map Visualization -->
+            <div class="map-panel">
+                <div class="card">
+                    <h2>Route Map</h2>
+                    <canvas id="mapCanvas" width="600" height="600"></canvas>
+                    <div class="map-legend">
+                        <div class="legend-item">
+                            <span class="legend-color pickup"></span>
+                            <span>Pickup Location</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color dropoff"></span>
+                            <span>Drop-off Location</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color route"></span>
+                            <span>Shortest Route</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Algorithm Info Section -->
+        <div class="info-section">
+            <div class="card">
+                <h2>🎯 How It Works</h2>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <h3>Dijkstra's Algorithm</h3>
+                        <p>We use Dijkstra's shortest path algorithm to find the optimal route between your pickup and drop-off locations, ensuring minimum distance and time.</p>
+                    </div>
+                    <div class="info-item">
+                        <h3>Graph-Based Navigation</h3>
+                        <p>City locations are represented as nodes in a graph, with roads as weighted edges. The algorithm efficiently computes the shortest path.</p>
+                    </div>
+                    <div class="info-item">
+                        <h3>Dynamic Pricing</h3>
+                        <p>Fare is calculated based on distance, estimated time, vehicle type, and time-of-day surge pricing to give you an accurate estimate.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="graph.js"></script>
+    <script src="dijkstra.js"></script>
+    <script src="fareCalculator.js"></script>
+    <script src="mapRenderer.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
